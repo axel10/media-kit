@@ -12,6 +12,30 @@ void nativeEnsureInitialized({String? libmpv}) {}
 class NativePlayer extends PlatformPlayer {
   NativePlayer({required super.configuration});
 
+  Future<NativePropertyResult> setProperty(
+    String property,
+    String value, {
+    bool waitForInitialization = true,
+    bool synchronized = true,
+  }) {
+    throw UnsupportedError(
+      '[NativePlayer.setProperty] is not available on web backend',
+    );
+  }
+
+  Future<List<NativePropertyResult>> setProperties(
+    Map<String, String> properties, {
+    bool waitForInitialization = true,
+    bool synchronized = true,
+  }) {
+    throw UnsupportedError(
+      '[NativePlayer.setProperties] is not available on web backend',
+    );
+  }
+
+  Future<List<NativePropertyResult>> get waitForNativeInitialProperties async =>
+      const <NativePropertyResult>[];
+
   /// Whether the [NativePlayer] is initialized for unit-testing.
   @visibleForTesting
   static bool test = false;
