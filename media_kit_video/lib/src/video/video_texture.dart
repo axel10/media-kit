@@ -400,9 +400,15 @@ class VideoState extends State<Video> with WidgetsBindingObserver {
                                 return ValueListenableBuilder<Rect?>(
                                   valueListenable: notifier.rect,
                                   builder: (context, rect, _) {
+                                    // Allow the texture to show when:
+                                    // 1. _visible is true (video-params reported valid dimensions, e.g. normal video files), OR
+                                    // 2. rect has real dimensions > 1x1 (e.g. lavfi-complex [vo] generated from audio-only content,
+                                    //    where video-params is empty but video-out-params has the filter output dimensions).
                                     if (id != null &&
                                         rect != null &&
-                                        _visible) {
+                                        (_visible ||
+                                            (rect.width > 1.0 &&
+                                                rect.height > 1.0))) {
                                       return SizedBox(
                                         // Apply aspect ratio if provided.
                                         width:
